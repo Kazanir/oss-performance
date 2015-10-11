@@ -7,8 +7,8 @@ are included.
 
 ```
 # Get the latest beta.
-wget http://ftp.drupal.org/files/projects/drupal-8.0.0-beta11.tar.gz
-tar -xzf drupal-8.0.0-beta11.tar.gz
+wget http://ftp.drupal.org/files/projects/drupal-8.0.0-rc1.tar.gz
+tar -xzf drupal-8.0.0-rc1.tar.gz
 
 # Install the site via Drush.
 drush si --db-url=mysql://drupal_bench:drupal_bench@localhost:3306/drupal_bench \
@@ -65,13 +65,13 @@ E.g.:
 git clone https://github.com/drush-ops/drush.git
 cd drush
 git rev-parse HEAD 
-# 8ba1fbe in this example
+# 4017fe6 in this example
 cd ..
-tar -cjf drush-8ba1fbe.tar.bz2 drush
+tar -cjf drush-4017fe6.tar.bz2 drush
 cd drush
 composer install
 cd ..
-tar -cjf drush-8ba1fbe-vendor.tar.bz2
+tar -cjf drush-8ba1fbe-vendor.tar.bz2 drush/vendor
 ```
 
 

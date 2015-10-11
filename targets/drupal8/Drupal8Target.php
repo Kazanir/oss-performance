@@ -23,16 +23,16 @@ abstract class Drupal8Target extends PerfTarget {
     } else {
       # Extract Drupal core.
       Utils::ExtractTar(
-        __DIR__.'/drupal-8.0.0-beta11.tar.gz',
+        __DIR__.'/drupal-8.0.0-rc1.tar.gz',
         $this->options->tempDir,
       );
       # Extract Drush and its vendor dir.
       Utils::ExtractTar(
-        __DIR__.'/drush-b4c0683.tar.bz2',
+        __DIR__.'/drush-4017fe6.tar.bz2',
         $this->options->tempDir,
       );
       Utils::ExtractTar(
-        __DIR__.'/drush-b4c0683-vendor.tar.bz2',
+        __DIR__.'/drush-4017fe6-vendor.tar.bz2',
         $this->options->tempDir,
       );
       # Extract static files.
@@ -47,8 +47,8 @@ abstract class Drupal8Target extends PerfTarget {
       $this->getSourceRoot().'/sites/default/settings.php',
     );
     copy(
-      __DIR__.'/settings/setup.php',
-      $this->getSourceRoot().'/sites/default/setup.php',
+      __DIR__.'/settings/compile.php',
+      $this->getSourceRoot().'/sites/default/compile.php',
     );
     copy(
       __DIR__.'/settings/services.yml',
@@ -59,7 +59,7 @@ abstract class Drupal8Target extends PerfTarget {
   }
 
   public function getSourceRoot(): string {
-    return $this->options->tempDir.'/drupal-8.0.0-beta11';
+    return $this->options->tempDir.'/drupal-8.0.0-rc1';
   }
 
   public function drushPrep(): void {
@@ -76,11 +76,7 @@ abstract class Drupal8Target extends PerfTarget {
     // Rebuild Drupal's cache to clear out stale filesystem entries.
     shell_exec($drush.' cr');
     // Try to pre-generate all Twig templates.
-    shell_exec(
-      'find . -name *.html.twig | '.
-      $drush.
-      ' scr sites/default/setup.php 2>&1',
-    );
+    shell_exec($drush.' scr sites/default/compile.php 2>&1');
     chdir($current);
   }
 

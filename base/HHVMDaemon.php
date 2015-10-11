@@ -180,18 +180,23 @@ final class HHVMDaemon extends PHPEngine {
 
       $dir_iter = new RecursiveDirectoryIterator($sourceRoot);
       $iter = new RecursiveIteratorIterator($dir_iter);
+      // Add the filenames to a list for our --input-list.
+      $input_list = Vector {};
       foreach ($iter as $info) {
         $path = $info->getPathname();
         // Source files not ending in .php need to be specifically included
         if (is_file($path) && substr($path, -4) !== '.php') {
           $contents = file_get_contents($path);
           if (strpos($contents, '<?php') !== false) {
-            $arg =
-              "--ffile=".ltrim(substr($path, strlen($sourceRoot)), '/');
-            $args->add($arg);
+            $input_list->add(ltrim(substr($path, strlen($sourceRoot)), '/'));
           }
         }
       }
+      $input_file = $this->options->tempDir.'/inputfiles.txt';
+      // Write the input files to a list and add it to the arguments.
+      file_put_contents($input_file, implode("\n", $input_list));
+      $arg = "--input-list=".$input_file;
+      $args->add($arg);
 
       $bcRepo = $this->options->tempDir.'/hhvm.hhbc';
       if (file_exists($bcRepo)) {
