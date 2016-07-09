@@ -688,9 +688,4 @@ $settings['install_profile'] = 'standard';
 $config_directories['active'] = 'sites/default/files/config_-zA-2ifUOILoWVo99QNJe_uVBlC0FoAfvCB3HzN7xEoqnmr0piYEphZNHookM5H8H3PKaFjH_g/active';
 $config_directories['staging'] = 'sites/default/files/config_-zA-2ifUOILoWVo99QNJe_uVBlC0FoAfvCB3HzN7xEoqnmr0piYEphZNHookM5H8H3PKaFjH_g/staging';
 
-$settings['php_storage']['twig'] = [
-  'class' => 'Drupal\Component\PhpStorage\FileStorage',
-  'secret' => $settings['hash_salt'],
-];
-
 

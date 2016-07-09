@@ -75,6 +75,9 @@ abstract class Drupal8Target extends PerfTarget {
 
     // Rebuild Drupal's cache to clear out stale filesystem entries.
     shell_exec($drush.' cr');
+    if (is_dir($this->getSourceRoot().'/core/modules/dynamic_page_cache')) {
+      shell_exec($drush.' en dynamic_page_cache -y');
+    }
     // Try to pre-generate all Twig templates.
     shell_exec($drush.' scr sites/default/compile.php 2>&1');
     chdir($current);
